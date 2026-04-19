@@ -10,16 +10,37 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WhoWeServeRouteImport } from './routes/who-we-serve'
+import { Route as VehiclesRouteImport } from './routes/vehicles'
+import { Route as VehicleParticularsRouteImport } from './routes/vehicle-particulars'
+import { Route as UsersRouteImport } from './routes/users'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CertificatesRouteImport } from './routes/certificates'
+import { Route as AnalyticsRouteImport } from './routes/analytics'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
 const WhoWeServeRoute = WhoWeServeRouteImport.update({
   id: '/who-we-serve',
   path: '/who-we-serve',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VehiclesRoute = VehiclesRouteImport.update({
+  id: '/vehicles',
+  path: '/vehicles',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VehicleParticularsRoute = VehicleParticularsRouteImport.update({
+  id: '/vehicle-particulars',
+  path: '/vehicle-particulars',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UsersRoute = UsersRouteImport.update({
+  id: '/users',
+  path: '/users',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegisterRoute = RegisterRouteImport.update({
@@ -37,9 +58,24 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CertificatesRoute = CertificatesRouteImport.update({
+  id: '/certificates',
+  path: '/certificates',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnalyticsRoute = AnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -56,29 +92,47 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/analytics': typeof AnalyticsRoute
+  '/certificates': typeof CertificatesRoute
   '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/products': typeof ProductsRoute
   '/register': typeof RegisterRoute
+  '/users': typeof UsersRoute
+  '/vehicle-particulars': typeof VehicleParticularsRoute
+  '/vehicles': typeof VehiclesRoute
   '/who-we-serve': typeof WhoWeServeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/analytics': typeof AnalyticsRoute
+  '/certificates': typeof CertificatesRoute
   '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/products': typeof ProductsRoute
   '/register': typeof RegisterRoute
+  '/users': typeof UsersRoute
+  '/vehicle-particulars': typeof VehicleParticularsRoute
+  '/vehicles': typeof VehiclesRoute
   '/who-we-serve': typeof WhoWeServeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/analytics': typeof AnalyticsRoute
+  '/certificates': typeof CertificatesRoute
   '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/products': typeof ProductsRoute
   '/register': typeof RegisterRoute
+  '/users': typeof UsersRoute
+  '/vehicle-particulars': typeof VehicleParticularsRoute
+  '/vehicles': typeof VehiclesRoute
   '/who-we-serve': typeof WhoWeServeRoute
 }
 export interface FileRouteTypes {
@@ -86,38 +140,62 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/analytics'
+    | '/certificates'
     | '/contact'
+    | '/dashboard'
     | '/login'
     | '/products'
     | '/register'
+    | '/users'
+    | '/vehicle-particulars'
+    | '/vehicles'
     | '/who-we-serve'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
+    | '/analytics'
+    | '/certificates'
     | '/contact'
+    | '/dashboard'
     | '/login'
     | '/products'
     | '/register'
+    | '/users'
+    | '/vehicle-particulars'
+    | '/vehicles'
     | '/who-we-serve'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/analytics'
+    | '/certificates'
     | '/contact'
+    | '/dashboard'
     | '/login'
     | '/products'
     | '/register'
+    | '/users'
+    | '/vehicle-particulars'
+    | '/vehicles'
     | '/who-we-serve'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AnalyticsRoute: typeof AnalyticsRoute
+  CertificatesRoute: typeof CertificatesRoute
   ContactRoute: typeof ContactRoute
+  DashboardRoute: typeof DashboardRoute
   LoginRoute: typeof LoginRoute
   ProductsRoute: typeof ProductsRoute
   RegisterRoute: typeof RegisterRoute
+  UsersRoute: typeof UsersRoute
+  VehicleParticularsRoute: typeof VehicleParticularsRoute
+  VehiclesRoute: typeof VehiclesRoute
   WhoWeServeRoute: typeof WhoWeServeRoute
 }
 
@@ -128,6 +206,27 @@ declare module '@tanstack/react-router' {
       path: '/who-we-serve'
       fullPath: '/who-we-serve'
       preLoaderRoute: typeof WhoWeServeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vehicles': {
+      id: '/vehicles'
+      path: '/vehicles'
+      fullPath: '/vehicles'
+      preLoaderRoute: typeof VehiclesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vehicle-particulars': {
+      id: '/vehicle-particulars'
+      path: '/vehicle-particulars'
+      fullPath: '/vehicle-particulars'
+      preLoaderRoute: typeof VehicleParticularsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/users': {
+      id: '/users'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof UsersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/register': {
@@ -151,11 +250,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/certificates': {
+      id: '/certificates'
+      path: '/certificates'
+      fullPath: '/certificates'
+      preLoaderRoute: typeof CertificatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/analytics': {
+      id: '/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof AnalyticsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -178,10 +298,16 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AnalyticsRoute: AnalyticsRoute,
+  CertificatesRoute: CertificatesRoute,
   ContactRoute: ContactRoute,
+  DashboardRoute: DashboardRoute,
   LoginRoute: LoginRoute,
   ProductsRoute: ProductsRoute,
   RegisterRoute: RegisterRoute,
+  UsersRoute: UsersRoute,
+  VehicleParticularsRoute: VehicleParticularsRoute,
+  VehiclesRoute: VehiclesRoute,
   WhoWeServeRoute: WhoWeServeRoute,
 }
 export const routeTree = rootRouteImport
