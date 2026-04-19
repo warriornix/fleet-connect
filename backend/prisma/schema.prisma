@@ -1,0 +1,124 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role { ADMIN MANAGER DRIVER }
+enum VehicleStatus { ACTIVE MAINTENANCE RETIRED }
+enum FuelType { REGULAR MIDGRADE PREMIUM DIESEL ELECTRIC }
+enum MaintenanceStatus { SCHEDULED IN_PROGRESS COMPLETED CANCELLED }
+enum ScheduleStatus { PENDING IN_PROGRESS COMPLETED OVERDUE }
+enum Priority { LOW MEDIUM HIGH URGENT }
+enum RecallStatus { OPEN INSPECTED REPAIRED CLOSED }
+enum CertificateType { REGISTRATION INSURANCE EMISSION INSPECTION MAINTENANCE OWNERSHIP }
+
+model User {
+  id           String        @id @default(uuid())
+  email        String        @unique
+  password     String
+  name         String
+  role         Role          @default(DRIVER)
+  createdAt    DateTime      @default(now())
+  vehicles     Vehicle[]
+  fuelLogs     FuelLog[]
+  maintenance  Maintenance[]
+  schedules    Schedule[]
+  certificates Certificate[]
+}
+
+model Vehicle {
+  id           String        @id @default(uuid())
+  make         String
+  model        String
+  year         Int
+  vin          String        @unique
+  licensePlate String        @unique
+  color        String?
+  mileage      Int           @default(0)
+  status       VehicleStatus @default(ACTIVE)
+  userId       String?
+  user         User?         @relation(fields: [userId], references: [id])
+  createdAt    DateTime      @default(now())
+  fuelLogs     FuelLog[]
+  maintenance  Maintenance[]
+  schedules    Schedule[]
+  recalls      Recall[]
+  certificates Certificate[]
+}
+
+model FuelLog {
+  id        String   @id @default(uuid())
+  vehicleId String
+  userId    String
+  date      DateTime @default(now())
+  gallons   Float
+  cost      Float
+  mileage   Int
+  odometer  Int
+  fuelType  FuelType
+  notes     String?
+  vehicle   Vehicle  @relation(fields: [vehicleId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Maintenance {
+  id          String            @id @default(uuid())
+  vehicleId   String
+  userId      String
+  date        DateTime          @default(now())
+  type        String
+  description String
+  cost        Float
+  provider    String?
+  status      MaintenanceStatus @default(SCHEDULED)
+  nextDueDate DateTime?
+  notes       String?
+  vehicle     Vehicle           @relation(fields: [vehicleId], references: [id])
+  user        User              @relation(fields: [userId], references: [id])
+}
+
+model Schedule {
+  id            String         @id @default(uuid())
+  vehicleId     String
+  title         String
+  description   String
+  scheduledDate DateTime
+  status        ScheduleStatus @default(PENDING)
+  priority      Priority       @default(MEDIUM)
+  assignedTo    String?
+  vehicle       Vehicle        @relation(fields: [vehicleId], references: [id])
+  user          User?          @relation(fields: [assignedTo], references: [id])
+}
+
+model Recall {
+  id           String       @id @default(uuid())
+  recallId     String       @unique
+  vehicleId    String
+  title        String
+  description  String
+  date         DateTime     @default(now())
+  status       RecallStatus @default(OPEN)
+  remedy       String?
+  manufacturer String
+  vehicle      Vehicle      @relation(fields: [vehicleId], references: [id])
+}
+
+model Certificate {
+  id           String          @id @default(uuid())
+  vehicleId    String
+  userId       String
+  type         CertificateType
+  hash         String          @unique
+  issueDate    DateTime        @default(now())
+  expiryDate   DateTime?
+  documentUrl  String?
+  verified     Boolean         @default(false)
+  blockchainTx String?
+  metadata     Json?
+  vehicle      Vehicle         @relation(fields: [vehicleId], references: [id])
+  user         User            @relation(fields: [userId], references: [id])
+}
